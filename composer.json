@@ -3,7 +3,7 @@
   "description": "Ease create ajax response",
   "keywords": ["bitrix", "d7", "api"],
   "type": "bitrix-d7-module",
-  "license": "MIT",,
+  "license": "MIT",
   "authors": [
     {
       "name": "Иван Поддубный (north.leshiy)>",
