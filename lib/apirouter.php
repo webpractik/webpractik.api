@@ -8,8 +8,11 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
 
 use \Bitrix\Main\Loader;
 
-
-class ApiRouter extends \CBitrixComponent
+/**
+ * Class ApiRouter
+ * @package Webpractik\Api
+ */
+abstract class ApiRouter extends \CBitrixComponent
 {
 	/**
 	 * @var array
@@ -18,8 +21,12 @@ class ApiRouter extends \CBitrixComponent
 	public $sefVariables = [];
 
 	/**
-	 * Массив роутов в формате:
-	 * '\\ПутьКласса\\ИмяКласса' => 'адрес/роута/'
+	 * Массив маршрутов в формате:
+	 * '\\ПутьКласса\\ИмяКласса' => 'адрес/маршрута/'
+	 * где адрес/маршрута без приставки /api/
+	 *
+	 * Пример:
+	 * '\MySite\Lk\Response\Resubmit' => 'application/resubmit/',
 	 * @var array
 	 */
 	public $arUrlTemplates = [];
@@ -48,7 +55,7 @@ class ApiRouter extends \CBitrixComponent
 	}
 
 	/**
-	 * Роутинг
+	 * Маршрутизация
 	 */
 	private function router() {
 		$engine    = new \CComponentEngine($this);
@@ -63,14 +70,18 @@ class ApiRouter extends \CBitrixComponent
 		}
 
 		if (!class_exists($className)) {
-			$reponse = new \Webpractik\Api\NotFoundRoute($this->sefVariables);
+			$response = new \Webpractik\Api\NotFoundRoute($this->sefVariables);
 		} else {
-			$reponse = new $className($this->sefVariables);
+			$response = new $className($this->sefVariables);
 		}
 
-		$reponse->handler();
-		$reponse->response->send();
+		$response->validateMethod();
+		if ($response->validate()) {
+			$response->handler();
+		} else {
+			$response->response->sendFail('Невалидный запрос');
+		}
+
+		$response->response->send();
 	}
-
-
 }
