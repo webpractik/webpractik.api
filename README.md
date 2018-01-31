@@ -1,20 +1,22 @@
+# webpractik/api
+
 Простой интерфейс для написания api в CMS Bitrix.
 
 Выносит все обработчики в пространство /api/, заставляя разработчиков писать унифицированные обработчики.
 
 Решение для тех кому надоело писать компоненты-обработчики, плодить кучу файлов в doc_root аля в папке /ajax и кто не внедрил себе роутер из laravel/symphony.
 
-# Установка в CMS Bitrix
+## Установка в CMS Bitrix
 1. ```composer require webpractik/api```
 2. Установка модуля в админке
 
-# Процесс установки
+### Процесс установки
 В процессе установки модуль
 - Добавляет в корень DocRoot `api-router.php`
 - Устанавливает маршрут `/api/` в `urlrewrite.php`
 - Устанавливает компонент в `local/components/webpractik/api/`
 
-# Написание обработчиков
+## Написание обработчиков
 1. Регистрируем маршруты `$arUrlTemplates` в компоненте webpractik:api в local.
 ```php
 <?
@@ -42,7 +44,7 @@ public $method | GET/POST - ожидаемый тип запроса
 public $request | `\Bitrix\Main\HttpRequest` https://dev.1c-bitrix.ru/api_d7/bitrix/main/request/index.php
 public $response | `\Webpractik\Api\JsonResponse`
 
-# Json example
+## Json example
 ```json
 {
   "status": true,
@@ -50,7 +52,7 @@ public $response | `\Webpractik\Api\JsonResponse`
 }
 ```
 
-# Интерфейс JsonResponse
+## Интерфейс JsonResponse
 Method | Description
 ------------ | -------------
 addError($strError) | добавление ошибки
@@ -63,7 +65,7 @@ haveErrors() | true|false
 getErrors() | array
 getResponse() | array
 
-## Example
+### Example
 ```php
 class FormRegister extends \Webpractik\Api\Response
 {
