@@ -19,7 +19,6 @@
 ## Написание обработчиков
 1. Регистрируем маршруты `$arUrlTemplates` в компоненте webpractik:api в local.
 ```php
-<?
 class ApiRouterExtended extends \Webpractik\Api\ApiRouter
 {
 	public $sefVariables   = [];
@@ -30,7 +29,6 @@ class ApiRouterExtended extends \Webpractik\Api\ApiRouter
 		'webpractik.main'
 	];
 }
-?>
 ```
 > В модули передаем те которые нужны для autoload (@todo fixme)
 
