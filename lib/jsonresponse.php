@@ -43,7 +43,19 @@ class JsonResponse extends Singleton
 		$this->response['errors'][] = $strError;
 		return $this;
 	}
-
+    
+    /**
+     * Добавление ошибки по ключу
+     * @param $key
+     * @param $strError
+     * @return $this
+     */
+    public function addErrorByKey($key, $strError)
+    {
+        $this->response['errors'][$key] = $strError;
+        return $this;
+    }
+	
 	/**
 	 * Очистка ошибок
 	 * @return $this
