@@ -47,6 +47,7 @@ abstract class ApiRouter extends \CBitrixComponent
 	 * Execution component
 	 */
 	public function executeComponent() {
+    	$this->expansionOptions();
 		Loader::includeModule('webpractik.api');
 		foreach ($this->arLoadModules as $loadModule) {
 			Loader::includeModule($loadModule);
@@ -84,4 +85,20 @@ abstract class ApiRouter extends \CBitrixComponent
 
 		$response->response->send();
 	}
+    
+    /**
+     * Метод, который забирает роуты и модули, указанные в соотв. классе метода рейтинга webpractik.rating https://github.com/webpractik/webpractik.rating
+     */
+    private function expansionOptions()
+    {
+        $event = new \Bitrix\Main\Event('webpractik.api', 'OnWebpractikRouterCall');
+        $event->send();
+        if ($event->getResults()){
+            foreach ($event->getResults() as $eventResult)
+            {
+                $this->arUrlTemplates += $eventResult->getParameters()['ROUTES'];
+                $this->arLoadModules += $eventResult->getParameters()['MODULES'];
+            }
+        }
+    }
 }
