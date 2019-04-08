@@ -47,7 +47,7 @@ abstract class ApiRouter extends \CBitrixComponent
 	 * Execution component
 	 */
 	public function executeComponent() {
-        $this->expansionOptions();
+    	$this->expansionOptions();
 		Loader::includeModule('webpractik.api');
 		foreach ($this->arLoadModules as $loadModule) {
 			Loader::includeModule($loadModule);
@@ -91,7 +91,7 @@ abstract class ApiRouter extends \CBitrixComponent
      */
     private function expansionOptions()
     {
-        $event = new \Bitrix\Main\Event('webpractik.rating', 'OnWebpractikRouterCall');
+        $event = new \Bitrix\Main\Event('webpractik.api', 'OnWebpractikRouterCall');
         $event->send();
         if ($event->getResults()){
             foreach ($event->getResults() as $eventResult)
